@@ -22,19 +22,25 @@
 	csv-mode
 	dash
         diminish
+        discover-my-major
+        dockerfile-mode
 	exec-path-from-shell
+        fill-column-indicator
 	flycheck
 	fringe-helper
 	git
 	git-gutter
 	git-gutter-fringe
+        git-timemachine
 	graphviz-dot-mode
+        groovy-mode
 	haml-mode
 	highlight-parentheses
         ;;	htmlize
 	inf-ruby
         ledger-mode
         flycheck
+        indent-guide
 	inflections
 	js2-mode
 	json-mode

@@ -55,7 +55,7 @@
    #+BEGIN_SRC emacs-lisp
      (set-face-attribute 'default nil
                          :family "Inconsolata"
-                         :height 150
+                         :height 120
                          :weight 'normal
                          :width 'normal)
 
@@ -64,7 +64,7 @@
                          'unicode
                          (font-spec :family "DejaVu Sans Mono"
                                     :width 'normal
-                                    :size 15.5
+                                    :size 12
                                     :weight 'normal)))
 
    #+END_SRC
@@ -199,7 +199,7 @@
   #+NAME: startup
   #+BEGIN_SRC emacs-lisp
     (setq inhibit-startup-screen +1)
-    (setq initial-major-mode 'org-mode)
+    (setq initial-major-mode 'adoc-mode)
     (setq initial-scratch-message nil)
   #+END_SRC
 
@@ -245,11 +245,37 @@
 
    #+name: formatting
    #+BEGIN_SRC emacs-lisp
-     (defun my/text-formatting-hooks ()
-       (my/turn-on 'auto-fill)) ; turn on automatic hard line wraps
+   ;;  (defun my/text-formatting-hooks ()
+   ;;    (my/turn-on 'auto-fill)) ; turn on automatic hard line wraps
 
-     (add-hook 'text-mode-hook
-               'my/text-formatting-hooks)
+   ;;  (add-hook 'text-mode-hook
+   ;;            'my/text-formatting-hooks)
+   #+END_SRC
+** Fill column indicator
+
+   #+name: formatting
+   #+BEGIN_SRC emacs-lisp
+     (require 'fill-column-indicator)
+     (setq-default fill-column 80)
+     (setq fci-rule-width 2)
+     (setq fci-rule-color "yellow")
+
+     ;; start fci-mode for all types of files
+     ;; (add-hook `after-change-major-mode-hook 'fci-mode)
+     ;; start fci-mode for different types of files
+     (add-hook 'clojure-mode-hook 'fci-mode)
+
+   #+END_SRC
+** Indentation guide
+
+   Using `indent-guide` package to privide indentation guides, for improved
+   reading.
+
+   #+name: formatting
+   #+BEGIN_SRC emacs-lisp
+     (require 'indent-guide)
+     (indent-guide-global-mode)
+
    #+END_SRC
 
 * Programming
@@ -293,6 +319,19 @@
      (global-set-key "\C-c\M-p" 'my/global-pair-programming-mode)
    #+END_SRC
 
+** Snippets
+
+   Snippets are convenient.
+   I'm also developing Asciidoctor snippets.
+
+   #+NAME: programming-setup
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'load-path
+                  "~/.emacs.d/plugins/yasnippet")
+     (require 'yasnippet)
+     (yas-global-mode 1)
+   #+END_SRC
+
 ** Lisps
 
    For lisp code, I want ParEdit plus general highlighting etc.
@@ -306,7 +345,7 @@
 
      ;;  Install local bindings for paredit that work under ssh/terminal
      (require 'paredit)
-     (require 'parinfer-mode)
+     ;; (require 'parinfer-mode)
 
      (define-key paredit-mode-map
        (kbd "C-c s <right>")
@@ -500,6 +539,15 @@
     #+BEGIN_SRC emacs-lisp
      (setq compilation-scroll-output t)
     #+END_SRC
+
+** Jenkinsfile
+   Add support for Jenkinsfile syntax, which is based on Groovy.
+
+   #+name: programming-setup
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\Jenkinsfile\\'" . groovy-mode))
+   #+END_SRC
+
 * Database client
   Don't wrap lines (query rows) when working with a database.
   #+NAME: databases
@@ -507,6 +555,13 @@
 (add-hook 'sql-interactive-mode-hook
           (lambda ()
             (toggle-truncate-lines t)))
+  #+END_SRC
+* Restclient
+  Include the external ext/restclient.el package, as it's not yet in MELPA stable.
+  #+NAME: restclient
+  #+BEGIN_SRC emacs-lisp
+    (require 'restclient)
+    (add-to-list 'auto-mode-alist '("\\.rest\\'" . restclient-mode))
   #+END_SRC
 * Dired
   #+name: dired
@@ -589,7 +644,7 @@
 
     (setq ido-enable-flex-matching t)
     (ido-mode +1)
-    (ido-ubiquitous-mode +1)
+    ;;(ido-ubiquitous-mode +1)
     (require 'ido-yes-or-no)
     (ido-yes-or-no-mode +1)
 
@@ -882,6 +937,7 @@
     <<environment>>
     <<tools>>
     <<databases>>
+    <<restclient>>
     <<customize-config>>
     <<look-and-feel>>
     <<formatting>>
