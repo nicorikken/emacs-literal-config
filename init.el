@@ -56,6 +56,7 @@
         org
 	paredit
         php-mode
+        po-mode
 	pkg-info
 	popup
 	powerline

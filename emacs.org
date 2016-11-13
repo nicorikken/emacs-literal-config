@@ -548,6 +548,30 @@
      (add-to-list 'auto-mode-alist '("\\Jenkinsfile\\'" . groovy-mode))
    #+END_SRC
 
+** HelloData
+   Custom script for initiating all of Hellodata
+
+   #+name: programming-setup
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'load-path "/Users/nico/Software/mpare/hellodata")
+     (require 'hellodata)
+   #+END_SRC
+
+** Translation
+   po-mode
+
+   #+name: programming-setup
+   #+BEGIN_SRC emacs-lisp
+   (autoload 'po-mode "po-mode"
+             "Major mode for translators to edit PO files" t)
+   (setq auto-mode-alist (cons '("\\.po\\'\\|\\.po\\." . po-mode)
+                               auto-mode-alist))
+
+   (autoload 'po-find-file-coding-system "po-compat")
+   (modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\."
+                               'po-find-file-coding-system)
+   #+END_SRC
+
 * Database client
   Don't wrap lines (query rows) when working with a database.
   #+NAME: databases
